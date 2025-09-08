@@ -10,6 +10,10 @@ import time
 from datetime import datetime
 from functools import wraps
 from flask import Flask, request, render_template, redirect, url_for, session, jsonify, send_file
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
 from .db import (get_db_connection, init_db, test_database_connection,
                 agregar_entrada_aereo, obtener_entradas_aereo,
                 agregar_control_material_almacen, obtener_control_material_almacen,
@@ -39,7 +43,7 @@ from .api_po_wo import registrar_rutas_po_wo
 from .smd_inventory_api import register_smd_inventory_routes
 
 app = Flask(__name__)
-app.secret_key = 'alguna_clave_secreta'  # Necesario para usar sesiones
+app.secret_key = os.getenv('SECRET_KEY', 'tu_clave_secreta_aqui_mes_2024')  # Use environment variable with fallback
 
 # Registrar rutas SMD Inventory después de crear la app
 register_smd_inventory_routes(app)
